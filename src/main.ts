@@ -5,10 +5,19 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   // create app by factory
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   // add validators
   app.useGlobalPipes(new ValidationPipe());
+
+  app.enableCors({
+    credentials: true,
+    origin: [
+      'http://localhost:4200',
+    ],
+    allowedHeaders: '*',
+    preflightContinue: true,
+  });
 
   // add swagger
   const config = new DocumentBuilder()
