@@ -1,15 +1,14 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 
-Schema()
 export class User {
-    @Prop({ required: true, unique: true })
+    @ApiProperty()
     username: string;
-    @Prop({ required: true })
+    @ApiProperty()
     first_name: string;
-    @Prop({ required: true })
+    @ApiProperty()
     last_name: string;
-    @Prop({ required: true, unique: true })
+    @ApiProperty()
     email_address: string;
-    @Prop({ required: true })
+    @ApiProperty()
     birthday: Date;
 }

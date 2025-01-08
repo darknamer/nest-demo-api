@@ -8,6 +8,7 @@ import { UserSchema } from './models/schemas/user.schema';
 import { UserService } from './services/user/user.service';
 import { UserController } from './controllers/user/user.controller';
 import { AppService } from './services/app/app.service';
+import { Connection } from 'mongoose';
 
 @Module({
   imports: [
@@ -26,7 +27,16 @@ import { AppService } from './services/app/app.service';
       },
     }),
 
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot(process.env.MONGO_URI, {
+      // onConnectionCreate: (connection: Connection) => {
+      //   connection.on('connected', () => console.log('connected'));
+      //   connection.on('open', () => console.log('open'));
+      //   connection.on('disconnected', () => console.log('disconnected'));
+      //   connection.on('reconnected', () => console.log('reconnected'));
+      //   connection.on('disconnecting', () => console.log('disconnecting'));
+      //   return connection;
+      // },
+    }),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema.loadClass(User) },
     ]),
