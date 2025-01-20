@@ -3,11 +3,12 @@ import { ValueService } from '@app/core/services/value/value.service';
 import { User } from '@app/data/models/models/user/user';
 import { UserCreateRequest } from '@app/data/models/view-models/users/user-create-request/user-create-request';
 import { UserDocument } from '@app/data/schemas/users/user.schema';
-import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
-@Controller('api/user')
+@Controller('app/api/user')
+@ApiTags('User')
 export class UserController {
 
     constructor(
@@ -39,7 +40,7 @@ export class UserController {
     @ApiResponse({ status: 201, type: User })
     async create(@Body() body: UserCreateRequest): Promise<UserDocument> {
         const username = this.value.username;
-        return await this.user.insertOne(username, new this.user.instnace({
+        return await this.user.insertOne(username, new this.user.instance({
             username: body.username.trim(),
             first_name: body.first_name.trim(),
             last_name: body.last_name.trim(),

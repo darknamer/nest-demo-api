@@ -14,7 +14,9 @@ const module = {
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test', 'provision')
           .default('development'),
+          API_URL: Joi.string().required(),
           API_PORT: Joi.number().port().default(4000),
+          JOB_URL: Joi.string().required(),
           JOB_PORT: Joi.number().port().default(4001),
   
         MONGO_URI: Joi.string().required(),

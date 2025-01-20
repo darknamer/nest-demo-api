@@ -1,6 +1,6 @@
 import { IDatabaseBase } from './i-database-base';
 import { ModelBase } from '@app/data/models/models/base/model-base/model-base';
-import { DeleteResult, FilterQuery, HydratedDocument, UpdateQuery, UpdateWriteOpResult } from 'mongoose';
+import { DeleteResult, FilterQuery, HydratedDocument, Model, UpdateQuery, UpdateWriteOpResult } from 'mongoose';
 import { RepositoryBaseService } from '@app/data/repositories/base/repository-base/repository-base.service';
 import { VALUE } from '@app/data/const/value';
 import { SortDocumentType } from '@app/data/types/sort-document.type';
@@ -11,7 +11,7 @@ export abstract class DatabaseBaseService<T extends ModelBase> implements IDatab
         private readonly _repo: RepositoryBaseService<T>,
     ) { }
 
-    get instnace() {
+    get instance(): Model<T> {
         return this._repo.instance;
     }
     get repository() {
