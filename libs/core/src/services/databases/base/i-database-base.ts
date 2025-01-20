@@ -1,10 +1,12 @@
 import { ModelBase } from "@app/data/models/models/base/model-base/model-base";
+import { IRepositoryBase } from "@app/data/repositories/base/repository-base/i-repository-base";
 import { SortDocumentType } from "@app/data/types/sort-document.type";
-import { DeleteResult, FilterQuery, HydratedDocument, Model, UpdateQuery, UpdateResult, UpdateWriteOpResult } from "mongoose";
+import { DeleteResult, FilterQuery, HydratedDocument, UpdateQuery, UpdateWriteOpResult } from "mongoose";
 
-export interface IRepositoryBase<T extends ModelBase> {
-    get instance(): Model<T>;
+export interface IDatabaseBase<T extends ModelBase> {
+    get repository(): IRepositoryBase<T>;
 
+    all(): Promise<HydratedDocument<T>[]>;
     count(filter: FilterQuery<T>): Promise<number>;
 
     getById(id: any): Promise<HydratedDocument<T> | null>;
