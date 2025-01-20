@@ -11,6 +11,9 @@ export abstract class DatabaseBaseService<T extends ModelBase> implements IDatab
         private readonly _repo: RepositoryBaseService<T>,
     ) { }
 
+    get instnace() {
+        return this._repo.instance;
+    }
     get repository() {
         return this._repo;
     }

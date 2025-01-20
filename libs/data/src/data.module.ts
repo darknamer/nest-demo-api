@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User } from './models/models/user/user';
 import { UserSchema } from './schemas/users/user.schema';
 import { UserRepositoryService } from './repositories/users/user-repository/user-repository.service';
+import { ParseDatePipePipe } from './pipes/parse-date-pipe/parse-date-pipe.pipe';
 
 const module = {
   imports: [
@@ -38,17 +39,21 @@ const module = {
 const repositories = [
   UserRepositoryService,
 ];
-
+const pipes = [
+  ParseDatePipePipe,
+];
 @Module({
   imports: [
     ...module.imports,
   ],
   providers: [
     ...repositories,
+    ...pipes,
   ],
   exports: [
     ...module.export,
     ...repositories,
+    ...pipes,
   ],
 })
 export class DataModule {}

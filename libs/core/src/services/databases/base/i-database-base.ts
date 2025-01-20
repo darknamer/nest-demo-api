@@ -1,9 +1,10 @@
 import { ModelBase } from "@app/data/models/models/base/model-base/model-base";
 import { IRepositoryBase } from "@app/data/repositories/base/repository-base/i-repository-base";
 import { SortDocumentType } from "@app/data/types/sort-document.type";
-import { DeleteResult, FilterQuery, HydratedDocument, UpdateQuery, UpdateWriteOpResult } from "mongoose";
+import { DeleteResult, FilterQuery, HydratedDocument, Model, UpdateQuery, UpdateWriteOpResult } from "mongoose";
 
 export interface IDatabaseBase<T extends ModelBase> {
+    get instance(): Model<T>;
     get repository(): IRepositoryBase<T>;
 
     all(): Promise<HydratedDocument<T>[]>;

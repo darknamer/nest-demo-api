@@ -1,7 +1,9 @@
 import { UserService } from '@app/core/services/databases/users/user/user.service';
+import { ValueService } from '@app/core/services/value/value.service';
 import { User } from '@app/data/models/models/user/user';
+import { UserCreateRequest } from '@app/data/models/view-models/users/user-create-request/user-create-request';
 import { UserDocument } from '@app/data/schemas/users/user.schema';
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { Request } from 'express';
 
@@ -10,6 +12,7 @@ export class UserController {
 
     constructor(
         private readonly user: UserService,
+        private readonly value: ValueService,
     ) { }
 
     @Get("all")
@@ -32,19 +35,18 @@ export class UserController {
     async getByUsername(@Query('username') username: string): Promise<UserDocument> {
         return await this.user.getByUsername(username);
     }
-    // @Post("create")
-    // @ApiResponse({ status: 201, type: User })
-    // async create(@Body() body: UserCreateRequest): Promise<UserDocument> {
-    //     const response = await this.user.create(body);
-
-    //     // check insert user fails
-    //     if (response == null) {
-    //         throw new BadRequestException("Duplicated user");
-    //     }
-
-    //     // insert user with successfully
-    //     return response;
-    // }
+    @Post("create")
+    @ApiResponse({ status: 201, type: User })
+    async create(@Body() body: UserCreateRequest): Promise<UserDocument> {
+        const username = this.value.username;
+        return await this.user.insertOne(username, new this.user.instnace({
+            username: body.username.trim(),
+            first_name: body.first_name.trim(),
+            last_name: body.last_name.trim(),
+            birthday: body.birthday,
+            email_address: body.email_address.trim(),
+        }));
+    }
     // @Put("update")
     // @ApiResponse({ status: 201, type: User })
     // async update(@Body() body: UserUpdateRequest) {
